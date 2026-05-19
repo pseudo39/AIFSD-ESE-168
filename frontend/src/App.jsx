@@ -8,6 +8,13 @@ import ComplaintForm from "./pages/ComplaintForm";
 import ComplaintList from "./pages/ComplaintList";
 import ComplaintDetail from "./pages/ComplaintDetail";
 import Dashboard from "./pages/Dashboard";
+import Landing from "./pages/Landing";
+import { useAuth } from "./context/AuthContext";
+
+const Home = () => {
+  const { user } = useAuth();
+  return user ? <Dashboard /> : <Landing />;
+};
 
 export default function App() {
   return (
@@ -16,7 +23,7 @@ export default function App() {
         <Navbar />
         <div className="min-h-screen bg-gray-50 pt-16">
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/complaints" element={<ComplaintList />} />
