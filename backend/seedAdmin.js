@@ -6,7 +6,8 @@ const User = require('./models/User.model');
 const seed = async () => {
   await connectDB();
 
-  const email = 'admin@complaint.com';
+  const email = process.env.ADMIN_EMAIL;
+  const password = process.env.ADMIN_PASSWORD;
   const existing = await User.findOne({ email });
   if (existing) {
     console.log('Admin already exists');
@@ -17,7 +18,7 @@ const seed = async () => {
   await User.create({
     name: 'Admin',
     email,
-    password: 'admin123',
+    password: password,
     role: 'admin',
   });
 
