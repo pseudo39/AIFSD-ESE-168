@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../api/axios";
 
-const STATUS_OPTIONS = ["Pending", "In Progress", "Resolved", "Rejected"];
-
 const URGENCY_COLORS = {
   High: "text-red-600 bg-red-50",
   Medium: "text-yellow-600 bg-yellow-50",
@@ -13,30 +11,14 @@ const URGENCY_COLORS = {
 export default function ComplaintDetail() {
   const { id } = useParams();
   const [complaint, setComplaint] = useState(null);
-  const [status, setStatus] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
-  const [statusLoading, setStatusLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
     api.get(`/complaints/${id}`).then(({ data }) => {
       setComplaint(data);
-      setStatus(data.status);
     });
   }, [id]);
-
-  const handleStatusUpdate = async () => {
-    setStatusLoading(true);
-    try {
-      const { data } = await api.put(`/complaints/${id}`, { status });
-      setComplaint(data);
-      setMessage("Status updated successfully!");
-    } catch {
-      setMessage("Failed to update status.");
-    } finally {
-      setStatusLoading(false);
-    }
-  };
 
   const handleAIAnalyze = async () => {
     setAiLoading(true);
@@ -64,24 +46,6 @@ export default function ComplaintDetail() {
           {complaint.category} · {complaint.location} · By {complaint.name}
         </p>
         <p className="text-gray-700 mb-6">{complaint.description}</p>
-
-        {/* Status Update */}
-        <div className="flex gap-2 items-center">
-          <select
-            className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-          >
-            {STATUS_OPTIONS.map((s) => <option key={s}>{s}</option>)}
-          </select>
-          <button
-            onClick={handleStatusUpdate}
-            disabled={statusLoading}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
-          >
-            {statusLoading ? "Updating..." : "Update Status"}
-          </button>
-        </div>
 
         {message && <p className="text-sm text-green-600 mt-2">{message}</p>}
       </div>

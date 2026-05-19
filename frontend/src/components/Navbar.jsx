@@ -16,6 +16,9 @@ export default function Navbar() {
         <Link to="/" className="text-xl font-bold text-blue-600">ComplaintAI</Link>
         <div className="flex items-center gap-4">
           <Link to="/complaints" className="text-gray-600 hover:text-blue-600 text-sm">Complaints</Link>
+          {user?.role === "admin" && (
+            <Link to="/admin" className="text-gray-600 hover:text-blue-600 text-sm">Admin Panel</Link>
+          )}
           {user ? (
             <>
               <span className="text-sm text-gray-500">Hi, {user.name}</span>

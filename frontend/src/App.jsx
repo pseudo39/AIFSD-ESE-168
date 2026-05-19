@@ -9,6 +9,7 @@ import ComplaintList from "./pages/ComplaintList";
 import ComplaintDetail from "./pages/ComplaintDetail";
 import Dashboard from "./pages/Dashboard";
 import Landing from "./pages/Landing";
+import AdminDashboard from "./pages/AdminDashboard";
 import { useAuth } from "./context/AuthContext";
 
 const Home = () => {
@@ -40,6 +41,14 @@ export default function App() {
               element={
                 <ProtectedRoute>
                   <ComplaintDetail />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard />
                 </ProtectedRoute>
               }
             />

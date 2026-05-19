@@ -1,4 +1,4 @@
-const Complaint = require("../models/Complaint");
+const Complaint = require("../models/Complaint.model");
 
 // POST /api/complaints
 const addComplaint = async (req, res) => {

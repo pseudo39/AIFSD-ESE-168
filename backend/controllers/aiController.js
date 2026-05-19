@@ -1,4 +1,4 @@
-const Complaint = require("../models/Complaint");
+const Complaint = require("../models/Complaint.model");
 const { callOpenRouter } = require("../utils/openrouter");
 
 // POST /api/ai/analyze
